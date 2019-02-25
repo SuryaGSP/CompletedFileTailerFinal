@@ -33,6 +33,21 @@
     <ClCompile Include="src\HeaderFiles\FileInfo.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\SystemUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\ThreadPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\FileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\DateHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h">

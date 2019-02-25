@@ -1,5 +1,4 @@
 #pragma once
-#include "JSONProcessor.h"
+#include "ThreadSafeQueue.h"
 void IntializeThreadPoolInFileProcessor();
-void processFiles(std::vector<JSONProcessor::fileNamePatternWithDirStruct> &fileNameStructvec);
 ThreadSafeQueue<std::string>* getModifiedFileQueueObject();

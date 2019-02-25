@@ -14,7 +14,7 @@ std::queue<std::string> JSONProcessor::includeDir;
 std::vector<std::string> JSONProcessor::includeFiles;
 std::vector<std::map<std::string, std::string>> JSONProcessor::includeFilesWithPattern;
 std::vector<JSONProcessor::fileNamePatternWithDirStruct> JSONProcessor::fileNamePatternDirStructVector;
-
+void processFiles(std::vector<JSONProcessor::fileNamePatternWithDirStruct> &fileNameStructvec);
 bool JSONProcessor::CheckAndPush(std::string fileName, std::regex regInstance)
 {
   std::string fileNameWithoutExt = LoggerUtil::GetFileNameWithOutExtension(fileName);

@@ -77,6 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)CompletedFileTailerFinal\src\HeaderFiles;$(SolutionDir)sqlite\include;C:\Users\surya-pt2591\source\Commonutil;$(SolutionDir)rapidjson-master\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)sqlite\lib</AdditionalLibraryDirectories>
@@ -126,6 +127,11 @@
     <ClCompile Include="src\Classes\JSONProcessor\JSONProcessor.cpp" />
     <ClCompile Include="src\HeaderFiles\DBOperations.h" />
     <ClCompile Include="src\HeaderFiles\FileInfo.h" />
+    <ClCompile Include="src\Implementation\DateHelper.cpp" />
+    <ClCompile Include="src\Implementation\FileReader.cpp" />
+    <ClCompile Include="src\Implementation\Main.cpp" />
+    <ClCompile Include="src\Implementation\ThreadPool.cpp" />
+    <ClCompile Include="src\Utils\SystemUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h" />
