@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)CompletedFileTailerFinal\src\HeaderFiles;$(SolutionDir)sqlite\include;C:\Users\surya-pt2591\source\Commonutil</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CompletedFileTailerFinal\src\HeaderFiles;$(SolutionDir)sqlite\include;C:\Users\surya-pt2591\source\Commonutil;$(SolutionDir)rapidjson-master\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)sqlite\lib</AdditionalLibraryDirectories>
@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h" />
     <ClInclude Include="src\HeaderFiles\HelperFunctions.h" />
+    <ClInclude Include="src\HeaderFiles\JSONProcessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
