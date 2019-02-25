@@ -30,5 +30,16 @@
     <ClCompile Include="src\HeaderFiles\DBOperations.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\HeaderFiles\FileInfo.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeaderFiles\HelperFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
