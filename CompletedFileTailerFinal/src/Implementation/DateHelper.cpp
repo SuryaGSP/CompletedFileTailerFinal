@@ -7,26 +7,6 @@
 #include "DBOperations.h"
 #include "ThreadSafeQueue.h"
 #include "ELALogger.h"
-
-void ReadFileFromQueue(std::string fileName);
-ThreadSafeQueue<std::string>* getPatternQueueObject()
-{
-  static ThreadSafeQueue<std::string> * patternInstance;
-  if (!patternInstance)
-    patternInstance = new ThreadSafeQueue<std::string>();
-  return patternInstance;
-}
-
-void WorkerThread()
-{
-  ThreadSafeQueue<std::string> * modifiedInstance = getPatternQueueObject();
-  std::string fileName;
-  while (modifiedInstance->TryPop(fileName))
-  {
-    ReadFileFromQueue(fileName);
-  }
-}
-
 void ReadFileFromQueue(std::string fileName)
 {
   std::cout << "Readed " << fileName << std::endl;
@@ -66,10 +46,28 @@ void ReadFileFromQueue(std::string fileName)
     if (inputFile.peek() == -1 || recordCount >= 1000)
     {
       DBOperations::UpdateQueury("update fileInfo set skip = ?1 , streampos = ?2 where fileName = ?3", curPos, 1, fileName);
-      std::cout << "updated " << LoggerUtil::GetParent(fileName) << LoggerUtil::GetFileName(fileName) << std::endl;
+      //std::cout << "updated " << LoggerUtil::GetParent(fileName) << LoggerUtil::GetFileName(fileName) << std::endl;
       DBOperations::UpdateQuery("update dirFilePatternInfo set fileName = ?1 where dirName = ?2", LoggerUtil::GetFileName(fileName), LoggerUtil::GetParent(fileName) + "\\");
       recordCount = 0;
     }
+  }
+}
+
+ThreadSafeQueue<std::string>* getPatternQueueObject()
+{
+  static ThreadSafeQueue<std::string> * patternInstance;
+  if (!patternInstance)
+    patternInstance = new ThreadSafeQueue<std::string>();
+  return patternInstance;
+}
+
+void WorkerThread()
+{
+  ThreadSafeQueue<std::string> * modifiedInstance = getPatternQueueObject();
+  std::string fileName;
+  while (modifiedInstance->TryPop(fileName))
+  {
+    ReadFileFromQueue(fileName);
   }
 }
 

@@ -12,7 +12,7 @@ void readRenamedFileData(std::string fileName, std::string renamedFileName)
   std::fstream inputFile;
   inputFile.open(renamedFileName, std::fstream::in);
   inputFile.seekg(streampos);
-  std::ofstream outFile;
+  //std::ofstream outFile;
   std::string curLine;
   std::string fileNameWithoutDir = LoggerUtil::GetFileName(fileName);
   ELALogger *logger = new ELALogger();
@@ -31,7 +31,7 @@ void readRenamedFileData(std::string fileName, std::string renamedFileName)
 
 void ReadFile(std::string fileName)
 {
-  std::cout << fileName << std::endl;
+  //std::cout << fileName << std::endl;
   long long streamposInt64;
   int skipValue;
   DBOperations::RetrieveSPosAndSkip("select streampos,skip from fileInfo where fileName = ?1", fileName, streamposInt64, skipValue);
@@ -40,7 +40,7 @@ void ReadFile(std::string fileName)
   std::ifstream inputFile;
   inputFile.open(fileName, std::fstream::in);
   inputFile.seekg(streampos);
-  std::ofstream outFile;
+  //std::ofstream outFile;
   std::string curLine;
   std::string fileNameWithoutDir = LoggerUtil::GetFileName(fileName);
   ELALogger *logger = new ELALogger();

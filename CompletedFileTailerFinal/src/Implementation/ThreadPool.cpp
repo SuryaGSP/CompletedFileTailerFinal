@@ -22,14 +22,15 @@ void WorkerThreads(int threadNo)
     if (FileInfo::FileProcessMap[fileName] == 2)
     {
       std::string rename = FileInfo::FileRenameMap[fileName];
-      lck.unlock();
       readRenamedFileData(fileName, rename);
+      lck.unlock();
     }
     else if (FileInfo::FileProcessMap[fileName] == 1)
     {
-      FileInfo::FileProcessMap[fileName] = 0;
       lck.unlock();
       ReadFile(fileName);
+      std::unique_lock<std::mutex> lck(FileInfo::m);
+      FileInfo::FileProcessMap[fileName] = 0;
     }
   }
 }

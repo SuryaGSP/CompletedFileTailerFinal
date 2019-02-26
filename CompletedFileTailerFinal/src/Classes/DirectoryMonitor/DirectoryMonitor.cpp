@@ -86,7 +86,7 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
       std::string fileName = LoggerUtil::WideCharToMultiByte(fni->FileName);
       if (fni->Action == FILE_ACTION_ADDED)
       {
-        std::cout << "File Created" << fileName << std::endl;
+        //std::cout << "File Created" << fileName << std::endl;
         if (direcMoniObject->includeTypes.size() == 0 && direcMoniObject->excludeTypes.size() == 0)
         {
           if (direcMoniObject->patternReference != "()")

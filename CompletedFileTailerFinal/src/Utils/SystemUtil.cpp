@@ -15,55 +15,52 @@
 
 namespace SystemUtil
 {
-	void ForEachMatchingFile(std::function<void(const char*,_WIN32_FIND_DATAA)> callback, const char* filePath, std::vector<std::string> patterns)
+	void ForEachMatchingFile(std::function<void(const char*,_WIN32_FIND_DATAA)> callback, const char* filePath,std::string spattern)
 	{
-		for (std::string spattern : patterns)
-		{
-			char *pattern = const_cast<char*>(spattern.c_str());
+	  char *pattern = const_cast<char*>(spattern.c_str());
 #ifdef	WINDOWS
-			HANDLE hFind;
-			WIN32_FIND_DATAA data;
-			char* filePattern = (char*)calloc(1, (strlen(filePath) + strlen(pattern) + 3));
-			strcat(filePattern, filePath);
-			strcat(filePattern, pattern);
-			strcat(filePattern, "*");
-			hFind = FindFirstFileA(filePattern, &data);
+	  HANDLE hFind;
+	  WIN32_FIND_DATAA data;
+	  char* filePattern = (char*)calloc(1, (strlen(filePath) + strlen(pattern) + 3));
+	  strcat(filePattern, filePath);
+	  strcat(filePattern, pattern);
+	  strcat(filePattern, "*");
+	  hFind = FindFirstFileA(filePattern, &data);
 
-			if (hFind != INVALID_HANDLE_VALUE)
-			{
-				do
-				{
-					if (strcmp(".", data.cFileName) != 0 && strcmp("..", data.cFileName) != 0)
-					{
-						callback(filePath, data);
-					}
-				}
-				while (FindNextFileA(hFind, &data));
+	  if (hFind != INVALID_HANDLE_VALUE)
+	  {
+		  do
+		  {
+			  if (strcmp(".", data.cFileName) != 0 && strcmp("..", data.cFileName) != 0)
+			  {
+				  callback(filePath, data);
+			  }
+		  }
+		  while (FindNextFileA(hFind, &data));
 
-				FindClose(hFind);
-			}
+		  FindClose(hFind);
+	  }
 
-			free(filePattern);
+	  free(filePattern);
 #else
-			DIR *ptrDIR = NULL;
-			struct dirent *ptrDirent = NULL;
-			ptrDIR = opendir(filePath);
-			if (ptrDIR)
-			{
-				while ((ptrDirent = readdir(ptrDIR)) != NULL)
-				{
-					if (StringUtil::IsSubString(pattern, ptrDirent->d_name))
-					{
-						callback(filePath, ptrDirent->d_name);
-					}
-				}
-				closedir(ptrDIR);
-			}
+	  DIR *ptrDIR = NULL;
+	  struct dirent *ptrDirent = NULL;
+	  ptrDIR = opendir(filePath);
+	  if (ptrDIR)
+	  {
+		  while ((ptrDirent = readdir(ptrDIR)) != NULL)
+		  {
+			  if (StringUtil::IsSubString(pattern, ptrDirent->d_name))
+			  {
+				  callback(filePath, ptrDirent->d_name);
+			  }
+		  }
+		  closedir(ptrDIR);
+	  }
 #endif
-		}
 	}
 
-	void RemoveFile(const char* path, const char* filename)
+    void RemoveFile(const char* path, const char* filename)
 	{
 		char deleteFile[100];
 		sprintf(deleteFile, "%s%s", path, filename);
