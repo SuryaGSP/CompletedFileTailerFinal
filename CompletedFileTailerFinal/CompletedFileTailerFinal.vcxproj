@@ -140,6 +140,7 @@
     <ClCompile Include="src\Utils\SystemUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HeaderFiles\CalenderHelper.h" />
     <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h" />
     <ClInclude Include="src\HeaderFiles\HelperFunctions.h" />
     <ClInclude Include="src\HeaderFiles\JSONProcessor.h" />

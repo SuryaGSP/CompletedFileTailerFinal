@@ -7,6 +7,7 @@
 #include "DBOperations.h"
 #include "ThreadSafeQueue.h"
 #include "ELALogger.h"
+#include "CalenderHelper.h"
 void ReadFileFromQueue(std::string fileName)
 {
   std::cout << "Readed " << fileName << std::endl;
@@ -102,20 +103,77 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
       return (stoi(firstMap["${yyyy}"]) < stoi(secondMap["${yyyy}"]));
     else if (firstMap["${yy}"] != secondMap["${yy}"])
       return (stoi(firstMap["${yy}"]) < stoi(secondMap["${yy}"]));
-    else if (firstMap["${MM}"] != secondMap["${MM}"])
-      return (stoi(firstMap["${MM}"]) < stoi(secondMap["${MM}"]));
     else if (firstMap["${M}"] != secondMap["${M}"])
       return (stoi(firstMap["${M}"]) < stoi(secondMap["${M}"]));
+    else if (firstMap["${MM}"] != secondMap["${MM}"])
+      return (stoi(firstMap["${MM}"]) < stoi(secondMap["${MM}"]));
+    else if (firstMap["${MMM}"] != secondMap["${MMM}"])
+    {
+      if (CalenderHelper::monthPatternShort.size() == 0)
+        CalenderHelper::setmonthPatternShort();
+      return CalenderHelper::monthPatternShort[firstMap["${MMM}"]]< CalenderHelper::monthPatternShort[secondMap["${MMM}"]];
+    }
+    else if (firstMap["${MMMM}"] != secondMap["${MMMM}"])
+    {
+      if (CalenderHelper::monthPatternLong.size() == 0)
+        CalenderHelper::setMOnthPatternLong();
+      return CalenderHelper::monthPatternLong[firstMap["${MMM}"]] < CalenderHelper::monthPatternLong[secondMap["${MMM}"]];
+    }
     else if (firstMap["${dd}"] != secondMap["${dd}"])
       return (stoi(firstMap["${dd}"]) < stoi(secondMap["${dd}"]));
     else if (firstMap["${d}"] != secondMap["${d}"])
       return (stoi(firstMap["${d}"]) < stoi(secondMap["${d}"]));
   }
-  else if (firstMap.find("${NUMBER_1}") != firstMap.end())
+  if (firstMap.find("${H}") != firstMap.end() || firstMap.find("${HH}") != firstMap.end())
   {
-    return (stoi(firstMap["${NUMBER_1}"]) < stoi(secondMap["${NUMBER_1}"]));
+    if (firstMap["${H}"] != secondMap["${H}"])
+      return (stoi(firstMap["${H}"]) < stoi(secondMap["${H}"]));
+    else if (firstMap["${HH}"] != secondMap["${HH}"])
+      return (stoi(firstMap["${HH}"]) < stoi(secondMap["${HH}"]));
+    else if (firstMap["${m}"] != secondMap["${m}"])
+      return (stoi(firstMap["${m}"]) < stoi(secondMap["${m}"]));
+    else if (firstMap["${mm}"] != secondMap["${mm}"])
+      return (stoi(firstMap["${mm}"]) < stoi(secondMap["${mm}"]));
+    else if (firstMap["${s}"] != secondMap["${s}"])
+      return (stoi(firstMap["${s}"]) < stoi(secondMap["${s}"]));
+    else if (firstMap["${ss}"] != secondMap["${ss}"])
+      return (stoi(firstMap["${ss}"]) < stoi(secondMap["${ss}"]));
   }
-
+  else if (firstMap.find("${NUMBER_1}") != firstMap.end() || firstMap.find("${NUMBER_2}") != firstMap.end() || firstMap.find("${NUMBER_3}") != firstMap.end())
+  {
+    if (firstMap["${NUMBER_1}"] != secondMap["${NUMBER_1}"])
+      return (stoi(firstMap["${NUMBER_1}"]) < stoi(secondMap["${NUMBER_1}"])); 
+    if (firstMap["${NUMBER_2}"] != secondMap["${NUMBER_2}"])
+      return (stoi(firstMap["${NUMBER_2}"]) < stoi(secondMap["${NUMBER_2}"]));   
+    if (firstMap["${NUMBER_3}"] != secondMap["${NUMBER_3}"])
+      return (stoi(firstMap["${NUMBER_3}"]) < stoi(secondMap["${NUMBER_3}"]));
+  }
+  else if (firstMap.find("${w}") != firstMap.end() || firstMap.find("${ww}") != firstMap.end() || firstMap.find("${W}") != firstMap.end() || firstMap.find("${WW}") != firstMap.end())
+  {
+    if (firstMap["${w}"] != secondMap["${w}"])
+      return (stoi(firstMap["${w}"]) < stoi(secondMap["${w}"]));
+    if (firstMap["${ww}"] != secondMap["${ww}"])
+      return (stoi(firstMap["${ww}"]) < stoi(secondMap["${ww}"]));  
+    if (firstMap["${W}"] != secondMap["${W}"])
+      return (stoi(firstMap["${W}"]) < stoi(secondMap["${W}"]));
+    if (firstMap["${WW}"] != secondMap["${WW}"])
+      return (stoi(firstMap["${WW}"]) < stoi(secondMap["${WW}"]));
+  }
+  else if(firstMap.find("${EEE}") != firstMap.end()|| firstMap.find("${EEEE}") != firstMap.end())
+  {
+    if (firstMap["${EEE}"] != secondMap["${EEE}"])
+    {
+      if (CalenderHelper::weekDayPatternShort.size() == 0)
+        CalenderHelper::setWeekDayPatternShort();
+      return CalenderHelper::weekDayPatternShort[firstMap["${EEE}"]] < CalenderHelper::weekDayPatternShort[secondMap["${EEE}"]];
+    }
+    else 
+    {
+      if (CalenderHelper::weekDayPatternLong.size() == 0)
+        CalenderHelper::setWeekDayPatternLong();
+      return CalenderHelper::weekDayPatternLong[firstMap["${EEE}"]] < CalenderHelper::weekDayPatternLong[secondMap["${EEE}"]];
+    }
+  }
   return false;
 }
 
