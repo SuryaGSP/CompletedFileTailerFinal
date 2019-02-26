@@ -98,7 +98,7 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
   }
   if (firstMap.find("${yyyy}") != firstMap.end() || firstMap.find("${yy}") != firstMap.end())
   {
-    if (firstMap["${yyyy}"] != secondMap["${yyyy}"])
+    if(firstMap["${yyyy}"] != secondMap["${yyyy}"])
       return (stoi(firstMap["${yyyy}"]) < stoi(secondMap["${yyyy}"]));
     else if (firstMap["${yy}"] != secondMap["${yy}"])
       return (stoi(firstMap["${yy}"]) < stoi(secondMap["${yy}"]));
@@ -111,6 +111,11 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
     else if (firstMap["${d}"] != secondMap["${d}"])
       return (stoi(firstMap["${d}"]) < stoi(secondMap["${d}"]));
   }
+  else if (firstMap.find("${NUMBER_1}") != firstMap.end())
+  {
+    return (stoi(firstMap["${NUMBER_1}"]) < stoi(secondMap["${NUMBER_1}"]));
+  }
+
   return false;
 }
 
