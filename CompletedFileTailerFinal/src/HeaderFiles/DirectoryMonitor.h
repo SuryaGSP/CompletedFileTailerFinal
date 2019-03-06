@@ -20,8 +20,6 @@ class DirectoryMonitor
 public:
   std::string dirName;
   static int TotalDirectories;
-  DirectoryMonitor();
-  ~DirectoryMonitor();
 
   static std::vector<std::string> monitorDirecs;
   void SetDirName(std::string dirName);

@@ -11,12 +11,23 @@ void ReadFile(std::string fileName);
 void WorkerThreads(int threadNo)
 {
   ThreadSafeQueue<std::string> * modifiedInstance = getModifiedFileQueueObject();
+  std::chrono::system_clock::time_point start , end ;
+  int start1 = 0;
+  double milli = 1000000;
+  double millicount = 0;
   while (true)
   {
     std::string fileName;
     if (!modifiedInstance->TryPop(fileName))
     {
+      end = std::chrono::system_clock::now();
+      if (start1 != 0)
+      {
+        std::cout << threadNo << "  " << (std::chrono::duration_cast<std::chrono::nanoseconds>(end-start)).count()/milli << std::endl;
+      }
       fileName = modifiedInstance->Pop();
+      start1++;
+      start = std::chrono::system_clock::now();
     }
     std::unique_lock<std::mutex> lck(FileInfo::m);
     if (FileInfo::FileProcessMap[fileName] == 2)
@@ -36,7 +47,7 @@ void WorkerThreads(int threadNo)
 }
 void IntializeThreadPoolInFileProcessor() {
   std::thread t1[noOfThreads];
-  for (int iter = 0; iter < 4; iter++)
+  for (int iter = 0; iter < noOfThreads; iter++)
   {
     t1[iter] = std::thread(WorkerThreads, iter);
   }

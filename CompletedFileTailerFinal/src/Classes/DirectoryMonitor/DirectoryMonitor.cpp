@@ -14,13 +14,6 @@ void AddFileMonitor(std::string fileName)
   FileInfo::AddFileNamesMonitored(fileName);
 }
 
-DirectoryMonitor::DirectoryMonitor()
-{
-}
-
-DirectoryMonitor::~DirectoryMonitor()
-{
-}
 void DirectoryMonitor::SetDirName(std::string dirName)
 {
   this->dirName = dirName;

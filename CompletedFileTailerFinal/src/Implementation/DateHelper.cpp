@@ -11,7 +11,6 @@
 void ReadFileFromQueue(std::string fileName)
 {
   std::cout << "Readed " << fileName << std::endl;
-  // std::this_thread::sleep_for(std::chrono::milliseconds(500));
   long long streamposInt64;
   int skipValue;
   DBOperations::RetrieveSPosAndSkip("select streampos,skip from fileInfo where fileName = ?1", fileName, streamposInt64, skipValue);
@@ -99,7 +98,7 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
   }
   if (firstMap.find("${yyyy}") != firstMap.end() || firstMap.find("${yy}") != firstMap.end())
   {
-    if(firstMap["${yyyy}"] != secondMap["${yyyy}"])
+    if (firstMap["${yyyy}"] != secondMap["${yyyy}"])
       return (stoi(firstMap["${yyyy}"]) < stoi(secondMap["${yyyy}"]));
     else if (firstMap["${yy}"] != secondMap["${yy}"])
       return (stoi(firstMap["${yy}"]) < stoi(secondMap["${yy}"]));
@@ -111,7 +110,7 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
     {
       if (CalenderHelper::monthPatternShort.size() == 0)
         CalenderHelper::setmonthPatternShort();
-      return CalenderHelper::monthPatternShort[firstMap["${MMM}"]]< CalenderHelper::monthPatternShort[secondMap["${MMM}"]];
+      return CalenderHelper::monthPatternShort[firstMap["${MMM}"]] < CalenderHelper::monthPatternShort[secondMap["${MMM}"]];
     }
     else if (firstMap["${MMMM}"] != secondMap["${MMMM}"])
     {
@@ -142,9 +141,9 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
   else if (firstMap.find("${NUMBER_1}") != firstMap.end() || firstMap.find("${NUMBER_2}") != firstMap.end() || firstMap.find("${NUMBER_3}") != firstMap.end())
   {
     if (firstMap["${NUMBER_1}"] != secondMap["${NUMBER_1}"])
-      return (stoi(firstMap["${NUMBER_1}"]) < stoi(secondMap["${NUMBER_1}"])); 
+      return (stoi(firstMap["${NUMBER_1}"]) < stoi(secondMap["${NUMBER_1}"]));
     if (firstMap["${NUMBER_2}"] != secondMap["${NUMBER_2}"])
-      return (stoi(firstMap["${NUMBER_2}"]) < stoi(secondMap["${NUMBER_2}"]));   
+      return (stoi(firstMap["${NUMBER_2}"]) < stoi(secondMap["${NUMBER_2}"]));
     if (firstMap["${NUMBER_3}"] != secondMap["${NUMBER_3}"])
       return (stoi(firstMap["${NUMBER_3}"]) < stoi(secondMap["${NUMBER_3}"]));
   }
@@ -153,13 +152,13 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
     if (firstMap["${w}"] != secondMap["${w}"])
       return (stoi(firstMap["${w}"]) < stoi(secondMap["${w}"]));
     if (firstMap["${ww}"] != secondMap["${ww}"])
-      return (stoi(firstMap["${ww}"]) < stoi(secondMap["${ww}"]));  
+      return (stoi(firstMap["${ww}"]) < stoi(secondMap["${ww}"]));
     if (firstMap["${W}"] != secondMap["${W}"])
       return (stoi(firstMap["${W}"]) < stoi(secondMap["${W}"]));
     if (firstMap["${WW}"] != secondMap["${WW}"])
       return (stoi(firstMap["${WW}"]) < stoi(secondMap["${WW}"]));
   }
-  else if(firstMap.find("${EEE}") != firstMap.end()|| firstMap.find("${EEEE}") != firstMap.end())
+  else if (firstMap.find("${EEE}") != firstMap.end() || firstMap.find("${EEEE}") != firstMap.end())
   {
     if (firstMap["${EEE}"] != secondMap["${EEE}"])
     {
@@ -167,7 +166,7 @@ bool compareDates(JSONProcessor::fileNamePatternWithDirStruct first, JSONProcess
         CalenderHelper::setWeekDayPatternShort();
       return CalenderHelper::weekDayPatternShort[firstMap["${EEE}"]] < CalenderHelper::weekDayPatternShort[secondMap["${EEE}"]];
     }
-    else 
+    else
     {
       if (CalenderHelper::weekDayPatternLong.size() == 0)
         CalenderHelper::setWeekDayPatternLong();
