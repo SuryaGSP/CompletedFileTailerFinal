@@ -52,8 +52,7 @@ void FileInfo::PrintFileNamesMonitored()
 {
   for (std::string &names : fileNamesMonitored)
   {
-    std::cout << names << " " << std::endl;
-    FileInfo::AddFileNamesMonitored(names);
+   FileInfo::AddFileNamesMonitored(names);
   }
 }
 

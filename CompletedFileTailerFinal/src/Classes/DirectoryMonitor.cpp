@@ -5,9 +5,10 @@
 #include "ThreadSafeQueue.h"
 #include "HelperFunctions.h"
 
+ELALogger* getLogObject();
 int DirectoryMonitor::TotalDirectories;
 std::vector<std::string> DirectoryMonitor::monitorDirecs;
-
+ELALogger* DirectoryMonitor::logger = NULL;
 void AddFileMonitor(std::string fileName)
 {
   DBOperations::InsertQuery("INSERT INTO fileInfo VALUES(?1, ?2 ,?3)  ON CONFLICT(fileName) DO UPDATE SET streampos = ?2 , skip = ?3", fileName, 0, 0);
@@ -49,11 +50,11 @@ void DirectoryMonitor::StartMonitoringDirectories(std::vector<DirectoryMonitor> 
   {
     if (refreshDirectory(directory))
     {
-      std::cout << "Monitoring Directory " << directory.dirName << std::endl;
+      logger->info(" Monitoring Directory %v", directory.dirName);
     }
     else
     {
-      std::cout << "stopped Monitoring Directory " << directory.dirName << std::endl;
+      logger->info("stopped Monitoring Directory %v", directory.dirName);
     }
   }
   while (true)
@@ -69,6 +70,7 @@ bool DirectoryMonitor::refreshDirectory(DirectoryMonitor &d)
 
 void DirectoryMonitor::CreateThreadForMonitoringDirectory(std::vector<DirectoryMonitor> d)
 {
+  logger = getLogObject();
   StartMonitoringDirectories(d);
 }
 
@@ -86,7 +88,7 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
       std::string fileName = LoggerUtil::WideCharToMultiByte(fni->FileName);
       if (fni->Action == FILE_ACTION_ADDED)
       {
-        //std::cout << "File Created" << fileName << std::endl;
+        logger->info("File Created %v", fileName);
         if (direcMoniObject->includeTypes.size() == 0 && direcMoniObject->excludeTypes.size() == 0)
         {
           if (direcMoniObject->patternReference != "()")
@@ -156,7 +158,7 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
       {
         FILE_NOTIFY_INFORMATION * fni1 = (FILE_NOTIFY_INFORMATION *)((char *)direcMoniObject->notificationBuffer + direcMoniObject->notificationBuffer->NextEntryOffset);
         std::string rfileName = LoggerUtil::WideCharToMultiByte(fni1->FileName);
-        std::cout << "File Renamed from " << fileName << " to " << rfileName << std::endl;
+        logger->info("File Renamed from %v  to %v", fileName, rfileName);
         FileInfo::pushRenameQueue(direcMoniObject->dirName + "" + fileName, direcMoniObject->dirName + "" + rfileName);
       }
       else if (direcMoniObject->notificationBuffer->Action == FILE_ACTION_MODIFIED)
@@ -165,24 +167,24 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
       }
       else if (direcMoniObject->notificationBuffer->Action == FILE_ACTION_REMOVED)
       {
-        std::cout << "File Removed " << std::endl;
+        logger->info("File Removed");
       }
     }
     notificationBufferCount = notificationBufferCount + fni->NextEntryOffset;
     if (!refreshDirectory(*direcMoniObject))
     {
-      std::cout << "Monitoring Failed " << direcMoniObject->dirName;
+      logger->info("Monitoring Failed %v", direcMoniObject->dirName);
     }
   }
   else if (dwErrorCode == ERROR_OPERATION_ABORTED)
   {
-    std::cout << "Operation aborted in " << direcMoniObject->dirName << std::endl;
+    logger->info("Operation aborted in %v", direcMoniObject->dirName);
     CloseHandle(direcMoniObject->handleDirectory);
     return;
   }
   else
   {
-    std::cout << " unknown error:: Error Code " << dwErrorCode << std::endl;
+    logger->info(" unknown error:: Error Code %v", dwErrorCode);
   }
   return;
 }

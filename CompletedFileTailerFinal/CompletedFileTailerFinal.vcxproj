@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)CompletedFileTailerFinal\src\HeaderFiles;$(SolutionDir)sqlite\include;C:\Users\surya-pt2591\source\Commonutil;$(SolutionDir)rapidjson-master\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CompletedFileTailerFinal\src\Includes;$(SolutionDir)sqlite\include;C:\Users\surya-pt2591\source\Commonutil;$(SolutionDir)rapidjson-master\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -127,12 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Classes\DBOperations\DBOperations.cpp" />
-    <ClCompile Include="src\Classes\DirectoryMonitor\DirectoryMonitor.cpp" />
-    <ClCompile Include="src\Classes\FileInfo\FileInfo.cpp" />
-    <ClCompile Include="src\Classes\JSONProcessor\JSONProcessor.cpp" />
-    <ClCompile Include="src\HeaderFiles\DBOperations.h" />
-    <ClCompile Include="src\HeaderFiles\FileInfo.h" />
+    <ClCompile Include="src\Classes\DBOperations.cpp" />
+    <ClCompile Include="src\Classes\DirectoryMonitor.cpp" />
+    <ClCompile Include="src\Classes\FileInfo.cpp" />
+    <ClCompile Include="src\Classes\JSONProcessor.cpp" />
+    <ClCompile Include="src\Implementation\TImeCalculator.cpp" />
+    <ClCompile Include="src\includes\DBOperations.h" />
+    <ClCompile Include="src\includes\FileInfo.h" />
     <ClCompile Include="src\Implementation\DateHelper.cpp" />
     <ClCompile Include="src\Implementation\FileReader.cpp" />
     <ClCompile Include="src\Implementation\Main.cpp" />
@@ -140,10 +141,11 @@
     <ClCompile Include="src\Utils\SystemUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HeaderFiles\CalenderHelper.h" />
-    <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h" />
-    <ClInclude Include="src\HeaderFiles\HelperFunctions.h" />
-    <ClInclude Include="src\HeaderFiles\JSONProcessor.h" />
+    <ClInclude Include="src\includes\CalenderHelper.h" />
+    <ClInclude Include="src\includes\DirectoryMonitor.h" />
+    <ClInclude Include="src\includes\HelperFunctions.h" />
+    <ClInclude Include="src\includes\JSONProcessor.h" />
+    <ClInclude Include="src\Includes\TimeCalculator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include "FileInfo.h"
+#include "ELALogger.h"
 
 class DirectoryMonitor
 {
@@ -16,13 +17,12 @@ class DirectoryMonitor
   std::string patternReference;
   FILE_NOTIFY_INFORMATION notificationBuffer[1024];
   FILE_NOTIFY_INFORMATION *notifyPointer;
-  std::map<std::string, FILE_NOTIFY_INFORMATION *> mapValue;
 public:
   std::string dirName;
   static int TotalDirectories;
+  static ELALogger* logger;
   DirectoryMonitor();
   ~DirectoryMonitor();
-
   static std::vector<std::string> monitorDirecs;
   void SetDirName(std::string dirName);
   bool Createhandle();

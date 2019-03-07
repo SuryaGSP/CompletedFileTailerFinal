@@ -26,6 +26,7 @@ class JSONProcessor
   static bool CheckAndPush(std::string fileName, std::regex regInstance);
 
 public:
+  static ELALogger * logger;
   struct fileNamePatternWithDirStruct
   {
     std::string patternString;

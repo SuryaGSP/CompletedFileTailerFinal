@@ -1,9 +1,11 @@
 #pragma once
 #include <iostream>
 #include "sqlite3.h"
+#include "ELALogger.h"
 class DBOperations
 {
   static sqlite3 *DBObject;
+  static ELALogger * logObject;
 public:
   static void OpenConnection(std::string dbNameWithoutDotDB);
   static void CloseConnection();

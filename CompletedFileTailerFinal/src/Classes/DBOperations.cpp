@@ -1,16 +1,18 @@
 #include "DBOperations.h"
-
+ELALogger * getLogObject();
 
 sqlite3 *DBOperations::DBObject = NULL;
+ELALogger * DBOperations::logObject = NULL;
 void DBOperations::OpenConnection(std::string dbNameWithoutDotDB)
 {
+  logObject = getLogObject();
   if (sqlite3_open((dbNameWithoutDotDB + ".db").c_str(), &DBObject) == SQLITE_OK)
   {
-    std::cout << "connection established";
+    logObject->info("connection established to %v.db", dbNameWithoutDotDB);
   }
   else
   {
-    std::cout << "Database Connection failed";
+    logObject->info("Database Connection failed... Failed connecting to %v.db",dbNameWithoutDotDB);
   }
 }
 
@@ -18,11 +20,11 @@ void DBOperations::CloseConnection()
 {
   if (sqlite3_close(DBObject) == SQLITE_OK)
   {
-    std::cout << "Connection closed";
+    logObject->info("Connection closed");
   }
   else
   {
-    std::cout << "Connection termination failed";
+    logObject->info("Connection termination failed");
   }
 }
 
@@ -107,7 +109,7 @@ void DBOperations::InsertQuery(std::string sql, std::string fileName, int skipVa
   }
   else
   {
-    std::cout << "Insert Failed" << std::endl;
+    logObject->info("Insert operation failed.. query::%v fileName::%v skipValue::%v streampos::%v ", sql, fileName, skipValue, streampos);
   }
   sqlite3_finalize(stmt);
 }
@@ -123,7 +125,7 @@ void DBOperations::InsertQueryMaintainState(std::string sql, std::string dirName
   }
   else
   {
-    std::cout << "Insert Failed" << std::endl;
+    logObject->info("Insert operation failed.. query::%v fileName1::%v dirName::%v", sql, fileName1, dirName);
   }
   sqlite3_finalize(stmt);
 }

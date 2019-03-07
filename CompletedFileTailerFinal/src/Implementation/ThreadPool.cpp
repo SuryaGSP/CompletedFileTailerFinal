@@ -10,7 +10,7 @@ void readRenamedFileData(std::string fileName, std::string renamedFileName);
 void ReadFile(std::string fileName);
 void WorkerThreads(int threadNo)
 {
-  ThreadSafeQueue<std::string> * modifiedInstance = getModifiedFileQueueObject();
+ ThreadSafeQueue<std::string> * modifiedInstance = getModifiedFileQueueObject();
   while (true)
   {
     std::string fileName;

@@ -1,7 +1,8 @@
 #include "JSONProcessor.h"
 #include "FileInfo.h"
 #include "HelperFunctions.h"
-
+ELALogger * getLogObject();
+ELALogger * JSONProcessor::logger;
 bool JSONProcessor::subDir;
 struct JSONProcessor::fileNamePatternWithDirStruct;
 std::string JSONProcessor::patternForDirectory;
@@ -160,6 +161,7 @@ void  JSONProcessor::callback(const char * direcPath, _WIN32_FIND_DATAA data)
 
 void JSONProcessor::ProcessJSON(std::string inputJSON)
 {
+  logger = getLogObject();
   std::string patternReference = "[{ \"NAME\": \"Day Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3,4...\", \"DATA\": \"${d}\", \"regex\": \"([1-9]|[12]\\\\d|3[01])\" }, { \"NAME\": \"01,02,03...\", \"DATA\": \"${dd}\", \"regex\": \"(0[1-9]|[12]\\\\d|3[01])\" }] }, { \"NAME\": \"Month Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3,4...\", \"DATA\": \"${M}\", \"regex\": \"([1-9]|1[12])\" }, { \"NAME\": \"01,02,03...\", \"DATA\": \"${MM}\", \"regex\": \"(0[1-9]|1[12])\" }, { \"NAME\": \"JAN,FEB,MAR...\", \"DATA\": \"${MMM}\", \"regex\": \"jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec\" }, { \"NAME\": \"JANUARY,FEBRUARY...\", \"DATA\": \"${MMMM}\", \"regex\": \"january|february|march|april|may|june|july|august|september|october|november|december\" }] }, { \"NAME\": \"Year Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"01,02,03...\", \"DATA\": \"${yy}\", \"regex\": \"(\\\\d{2})\" }, { \"NAME\": \"2001,2002...\", \"DATA\": \"${yyyy}\", \"regex\": \"(\\\\d{4})\" }] }, { \"NAME\": \"Weekday Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"Sun,Mon,Tue...\", \"DATA\": \"${EEE}\", \"regex\": \"sun|mon|tue|wed|thu|fri|sat\" }, { \"NAME\": \"Sunday,Mondays...\", \"DATA\": \"${EEEE}\", \"regex\": \"sunday|monday|tuesday|wednesday|thursday|friday\" }] }, { \"NAME\": \"Week in Year Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3...\", \"DATA\": \"${w}\", \"regex\": \"([1-9]|[1234]\\\\d|5[012])\" }, { \"NAME\": \"01,02...\", \"DATA\": \"${ww}\", \"regex\": \"(0[1-9]|[1234]\\\\d|5[012])\" }] }, { \"NAME\": \"Week In Month Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3...\", \"DATA\": \"${W}\", \"regex\": \"([1234])\" }, { \"NAME\": \"01,02...\", \"DATA\": \"${WW}\", \"regex\": \"(0[1234])\" }] }, { \"NAME\": \"Hour Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2...24\", \"DATA\": \"${H}\", \"regex\": \"([1-9]|[1]\\\\d|2[01234])\" }, { \"NAME\": \"01,02...24\", \"DATA\": \"${HH}\", \"regex\": \"(0[1-9]|[1]\\\\d|2[01234])\" }] }, { \"NAME\": \"Minute Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3,4...\", \"DATA\": \"${m}\", \"regex\": \"([1-9]|[12345]\\\\d)\" }, { \"NAME\": \"01,02...\", \"DATA\": \"${mm}\", \"regex\": \"(0[1-9]|[12345]\\\\d)\" }] }, { \"NAME\": \"Second Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3,4...\", \"DATA\": \"${s}\", \"regex\": \"([1-9]|[12345]\\\\d)\" }, { \"NAME\": \"01,02...\", \"DATA\": \"${ss}\", \"regex\": \"(0[1-9]|[12345]\\\\d)\" }] }, { \"NAME\": \"Number of Increments Pattern\", \"HASCHILD\": true, \"LIST\": [{ \"NAME\": \"1,2,3,4...\", \"DATA\": \"${NUMBER_1}\", \"regex\": \"(\\\\d+)\" }, { \"NAME\": \"01,02,03...\", \"DATA\": \"${NUMBER_2}\", \"regex\": \"(0[0-9]|[1-9]\\\\d+)\" }, { \"NAME\": \"001,002,003...\", \"DATA\": \"${NUMBER_3}\", \"regex\": \"(00[0-9]|0[1-9][0-9]|[1-9][0-9]\\\\d+)\" }] }]";
   CreateProcessPattern(patternReference, patternMap);
   rapidjson::Document d;
@@ -235,6 +237,7 @@ void JSONProcessor::ProcessJSON(std::string inputJSON)
               }
               if (fileNamePatternDirStructVector.size() > 0)
               {
+                logger->info(" File Names found in %v", dirName);
                 processFiles(fileNamePatternDirStructVector);
               }
             }
@@ -249,7 +252,7 @@ void JSONProcessor::ProcessJSON(std::string inputJSON)
       }
       else
       {
-        std::cout << "Has no member Locations";
+        logger->info(" Failed Processing JSON .. Failed to find member Location");
       }
     }
     for (std::string &s : includeFiles)
@@ -259,7 +262,7 @@ void JSONProcessor::ProcessJSON(std::string inputJSON)
   }
   else
   {
-    std::cout << inputJSON;
+    logger->error("Error.........Failed for the input %v", inputJSON);
   }
 }
 
@@ -280,12 +283,12 @@ void JSONProcessor::CreateProcessPattern(std::string patternReference, std::map<
       }
       else
       {
-        std::cout << "Invalid Input for Pattern Reference...." << std::endl;
+        logger->info(" Invalid JSON Input for Pattern Reference.... Has No member LIST");
       }
     }
   }
   else
   {
-    std::cout << "Invalid Input for Pattern Reference...." << std::endl;
+    logger->info("Invalid JSON input for Pattern Reference ..  Input is not array");
   }
 }

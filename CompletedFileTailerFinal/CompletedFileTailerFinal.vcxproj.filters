@@ -15,24 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Classes\DBOperations\DBOperations.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Classes\DirectoryMonitor\DirectoryMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Classes\FileInfo\FileInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Classes\JSONProcessor\JSONProcessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HeaderFiles\DBOperations.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HeaderFiles\FileInfo.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Implementation\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,18 +30,42 @@
     <ClCompile Include="src\Utils\SystemUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Classes\DBOperations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Classes\DirectoryMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Classes\FileInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Classes\JSONProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\includes\DBOperations.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\includes\FileInfo.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\TImeCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HeaderFiles\DirectoryMonitor.h">
+    <ClInclude Include="src\includes\CalenderHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeaderFiles\HelperFunctions.h">
+    <ClInclude Include="src\includes\DirectoryMonitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeaderFiles\JSONProcessor.h">
+    <ClInclude Include="src\includes\HelperFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeaderFiles\CalenderHelper.h">
+    <ClInclude Include="src\includes\JSONProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Includes\TimeCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

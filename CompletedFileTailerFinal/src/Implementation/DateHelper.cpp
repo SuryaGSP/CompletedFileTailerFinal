@@ -10,8 +10,6 @@
 #include "CalenderHelper.h"
 void ReadFileFromQueue(std::string fileName)
 {
-  std::cout << "Readed " << fileName << std::endl;
-  // std::this_thread::sleep_for(std::chrono::milliseconds(500));
   long long streamposInt64;
   int skipValue;
   DBOperations::RetrieveSPosAndSkip("select streampos,skip from fileInfo where fileName = ?1", fileName, streamposInt64, skipValue);
@@ -23,31 +21,29 @@ void ReadFileFromQueue(std::string fileName)
   std::ofstream outFile;
   std::string curLine;
   std::string fileNameWithoutDir = LoggerUtil::GetFileName(fileName);
-  ELALogger *logger = new ELALogger();
-  logger->SetExtension("txt");
-  logger->SetLogFileName(fileNameWithoutDir);
-  logger->SetLogDir("D:\\Dir");
-  logger->Start();
+  outFile.open("D:\\Dir\\" + fileNameWithoutDir + ".txt");
   if (skipValue != 0)
   {
     std::getline(inputFile, curLine);
   }
   else
   {
-    logger->info(&fileName[0u]);
+    outFile << fileName << std::endl;
   }
   std::streampos curPos;
   int recordCount = 0;
+  std::stringstream s;
   while (inputFile.peek() != -1)
   {
     curPos = inputFile.tellg();
     std::getline(inputFile, curLine);
-    logger->info(&curLine[0u]);
+    s << curLine << std::endl;
     recordCount++;
     if (inputFile.peek() == -1 || recordCount >= 1000)
     {
+      outFile << s.str();
+      s.str(std::string());
       DBOperations::UpdateQueury("update fileInfo set skip = ?1 , streampos = ?2 where fileName = ?3", curPos, 1, fileName);
-      //std::cout << "updated " << LoggerUtil::GetParent(fileName) << LoggerUtil::GetFileName(fileName) << std::endl;
       DBOperations::UpdateQuery("update dirFilePatternInfo set fileName = ?1 where dirName = ?2", LoggerUtil::GetFileName(fileName), LoggerUtil::GetParent(fileName) + "\\");
       recordCount = 0;
     }
@@ -182,10 +178,8 @@ void processFiles(std::vector<JSONProcessor::fileNamePatternWithDirStruct> &file
 {
   std::sort(fileNameStructvec.begin(), fileNameStructvec.end(), compareDates);
   JSONProcessor::fileNamePatternWithDirStruct vecfirst = *fileNameStructvec.begin();
-  std::cout << vecfirst.dirName << std::endl;
   if (DBOperations::checkRowCount("select count(*) from dirFilePatternInfo where dirName = ?2", vecfirst.dirName))
   {
-    std::cout << vecfirst.dirName << "rows found check and push" << std::endl;
     std::string lastFileName;
     DBOperations::RetrieveLastFileName("select fileName from dirFilePatternInfo where dirName = ?2", vecfirst.dirName, lastFileName);
     bool notSkip = false;
@@ -194,25 +188,18 @@ void processFiles(std::vector<JSONProcessor::fileNamePatternWithDirStruct> &file
       if (ce.fileName == lastFileName)
       {
         notSkip = true;
-        std::cout << "match found :: " << ce.fileName << std::endl;
         DBOperations::InsertQuery("insert or ignore into fileInfo values(?1,?2,?3)", ce.dirName + ce.fileName, 0, 0);
         getPatternQueueObject()->Push(ce.dirName + ce.fileName);
       }
       else if (notSkip == true)
       {
-        std::cout << " found file " << ce.fileName << std::endl;
         DBOperations::InsertQuery("insert or ignore into fileInfo values(?1,?2,?3)", ce.dirName + ce.fileName, 0, 0);
         getPatternQueueObject()->Push(ce.dirName + ce.fileName);
-      }
-      else
-      {
-        std::cout << "skipped " << ce.fileName << std::endl;
       }
     }
   }
   else
   {
-    std::cout << vecfirst.dirName << " no rows found push sorted fileNames" << vecfirst.fileName << std::endl;
     DBOperations::InsertQueryMaintainState("insert into dirFilePatternInfo values(?2,?3)", vecfirst.dirName, vecfirst.fileName);
     for (JSONProcessor::fileNamePatternWithDirStruct ce : fileNameStructvec)
     {
