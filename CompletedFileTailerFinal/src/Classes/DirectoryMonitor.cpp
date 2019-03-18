@@ -85,6 +85,7 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
     int fileNameLength = fni->FileNameLength / sizeof(WCHAR);
     if (fileNameLength > 0)
     {
+      fni->FileName[fni->FileNameLength / sizeof(WCHAR)] = '\0';
       std::string fileName = LoggerUtil::WideCharToMultiByte(fni->FileName);
       if (fni->Action == FILE_ACTION_ADDED)
       {
@@ -170,7 +171,6 @@ VOID DirectoryMonitor::CallBackFunction(DWORD dwErrorCode, DWORD dwNumberOfBytes
         logger->info("File Removed");
       }
     }
-    notificationBufferCount = notificationBufferCount + fni->NextEntryOffset;
     if (!refreshDirectory(*direcMoniObject))
     {
       logger->info("Monitoring Failed %v", direcMoniObject->dirName);

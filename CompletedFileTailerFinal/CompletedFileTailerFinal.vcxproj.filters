@@ -48,7 +48,10 @@
     <ClCompile Include="src\includes\FileInfo.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Implementation\TImeCalculator.cpp">
+    <ClCompile Include="src\Classes\TImeCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Implementation\DBThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -131,7 +131,8 @@
     <ClCompile Include="src\Classes\DirectoryMonitor.cpp" />
     <ClCompile Include="src\Classes\FileInfo.cpp" />
     <ClCompile Include="src\Classes\JSONProcessor.cpp" />
-    <ClCompile Include="src\Implementation\TImeCalculator.cpp" />
+    <ClCompile Include="src\Classes\TImeCalculator.cpp" />
+    <ClCompile Include="src\Implementation\DBThread.cpp" />
     <ClCompile Include="src\includes\DBOperations.h" />
     <ClCompile Include="src\includes\FileInfo.h" />
     <ClCompile Include="src\Implementation\DateHelper.cpp" />

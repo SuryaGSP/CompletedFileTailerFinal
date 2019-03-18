@@ -1,4 +1,5 @@
 #include <chrono>
+#include <iostream>
 #include "..\Includes\TimeCalculator.h"
 
 Timer::Timer()
@@ -15,5 +16,5 @@ void Timer::TimerStart()
 void Timer::TimerStop()
 {
   end = std::chrono::system_clock::now();
-  fileOut << (std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)).count() / milli << std::endl;
+  fileOut << (std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)).count() / milli << " ";
 }

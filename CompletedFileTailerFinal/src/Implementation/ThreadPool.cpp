@@ -36,7 +36,7 @@ void WorkerThreads(int threadNo)
 }
 void IntializeThreadPoolInFileProcessor() {
   std::thread t1[noOfThreads];
-  for (int iter = 0; iter < 4; iter++)
+  for (int iter = 0; iter < noOfThreads; iter++)
   {
     t1[iter] = std::thread(WorkerThreads, iter);
   }

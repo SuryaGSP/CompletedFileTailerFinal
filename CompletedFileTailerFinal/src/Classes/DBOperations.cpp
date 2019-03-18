@@ -57,6 +57,17 @@ void DBOperations::UpdateQuery(std::string sql, std::string fileName, std::strin
   sqlite3_finalize(stmt);
 }
 
+void DBOperations::UpdateRawQuery(std::string sql)
+{
+  sqlite3_stmt * stmt;
+  sqlite3_prepare_v2(DBObject, sql.c_str(), -1, &stmt, NULL);
+  if (sqlite3_step(stmt) != SQLITE_DONE)
+  {
+    logObject->info("Logging Failed");
+  }
+  sqlite3_finalize(stmt);
+}
+
 
 void DBOperations::RetrieveSPosAndSkip(std::string sql, std::string fileName, long long & streampos, int & skipValue)
 {
