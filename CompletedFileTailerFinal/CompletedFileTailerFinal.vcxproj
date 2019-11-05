@@ -18,6 +18,28 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DateHelper.cpp" />
+    <ClCompile Include="DBOperations.cpp" />
+    <ClCompile Include="DBThread.cpp" />
+    <ClCompile Include="DirectoryMonitor.cpp" />
+    <ClCompile Include="FileInfo.cpp" />
+    <ClCompile Include="FileReader.cpp" />
+    <ClCompile Include="JSONProcessor.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SystemUtil.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="TImeCalculator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CalenderHelper.h" />
+    <ClInclude Include="DBOperations.h" />
+    <ClInclude Include="DirectoryMonitor.h" />
+    <ClInclude Include="FileInfo.h" />
+    <ClInclude Include="HelperFunctions.h" />
+    <ClInclude Include="JSONProcessor.h" />
+    <ClInclude Include="TimeCalculator.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A4CFDDC2-9B01-491E-87E9-37163EC42174}</ProjectGuid>
@@ -90,11 +112,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)sqlite\include;$(SolutionDir)rapidjson-master\include;$(SolutionDir)CompletedFileTailerFinal\src\HeaderFiles;C:\Users\surya-pt2591\source\Commonutil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)sqlite\include;$(SolutionDir)rapidjson-master\include;$(SolutionDir)CompletedFileTailerFinal\src\Includes;D:\res\resources\Commonutil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)sqlite\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)sqlite\lib;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>sqlite3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,28 +148,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Classes\DBOperations.cpp" />
-    <ClCompile Include="src\Classes\DirectoryMonitor.cpp" />
-    <ClCompile Include="src\Classes\FileInfo.cpp" />
-    <ClCompile Include="src\Classes\JSONProcessor.cpp" />
-    <ClCompile Include="src\Classes\TImeCalculator.cpp" />
-    <ClCompile Include="src\Implementation\DBThread.cpp" />
-    <ClCompile Include="src\includes\DBOperations.h" />
-    <ClCompile Include="src\includes\FileInfo.h" />
-    <ClCompile Include="src\Implementation\DateHelper.cpp" />
-    <ClCompile Include="src\Implementation\FileReader.cpp" />
-    <ClCompile Include="src\Implementation\Main.cpp" />
-    <ClCompile Include="src\Implementation\ThreadPool.cpp" />
-    <ClCompile Include="src\Utils\SystemUtil.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\includes\CalenderHelper.h" />
-    <ClInclude Include="src\includes\DirectoryMonitor.h" />
-    <ClInclude Include="src\includes\HelperFunctions.h" />
-    <ClInclude Include="src\includes\JSONProcessor.h" />
-    <ClInclude Include="src\Includes\TimeCalculator.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
